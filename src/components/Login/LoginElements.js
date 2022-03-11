@@ -13,6 +13,11 @@ export const Content = styled.div`
 	display: flex;
 	justify-content: center;
 	margin: 100px auto;
+
+	@media screen and (max-width: 1080px) {
+		flex-direction: column;
+		align-items: center;
+	}
 `;
 export const Column = styled.div`
 	padding: 30px;
@@ -20,6 +25,14 @@ export const Column = styled.div`
 	flex-direction: column;
 	justify-content: space-around;
 	height: 500px;
+
+	@media screen and (max-width: 1080px) {
+		padding: 5px;
+	}
+	@media screen and (max-width: 480px) {
+		padding: 0;
+		height: auto;
+	}
 `;
 export const Logo = styled.div`
 	display: flex;
@@ -30,6 +43,12 @@ export const Logo = styled.div`
 	img {
 		width: 400px;
 	}
+
+	@media screen and (max-width: 480px) {
+		img {
+			width: 300px;
+		}
+	}
 `;
 export const Description = styled.h2`
 	font-size: 28px;
@@ -38,6 +57,17 @@ export const Description = styled.h2`
 	width: 500px;
 	margin-left: 45px;
 	color: #1c1e21;
+
+	@media screen and (max-width: 768px) {
+		font-size: 22px;
+		width: 400px;
+	}
+	@media screen and (max-width: 480px) {
+		width: 300px;
+		font-size: 18px;
+		margin-left: 0;
+		text-align: center;
+	}
 `;
 export const Form = styled.form`
 	align-items: center;
@@ -49,6 +79,10 @@ export const Form = styled.form`
 	margin: 40px 0 0;
 	padding: 20px 0 28px;
 	width: 396px;
+
+	@media screen and (max-width: 480px) {
+		width: 320px;
+	}
 `;
 
 export const ButtonRegister = styled.button`
@@ -108,11 +142,16 @@ export const InputContainer = styled.div`
 		outline: none;
 		border: 1px solid #ccd0d5;
 		color: #1d2129;
+
 		&:focus {
 			border-color: #1877f2;
 			box-shadow: 0 0 0 2px #e7f3ff;
 			caret-color: #1877f2;
 		}
+	}
+
+	@media screen and (max-width: 480px) {
+		width: 280px;
 	}
 `;
 
@@ -142,5 +181,9 @@ export const ButtonContainer = styled.div`
 			background-color: #166fe5;
 			border-color: #365899;
 		}
+	}
+
+	@media screen and (max-width: 480px) {
+		width: 280px;
 	}
 `;

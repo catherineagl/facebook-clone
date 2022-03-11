@@ -1,29 +1,99 @@
 import React from 'react';
-import { BsFacebook } from 'react-icons/bs';
-import { AiFillHome } from 'react-icons/ai';
-import { FaUserFriends } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
+import pic from '../../images/pic.png';
+import { AiOutlineHome } from 'react-icons/ai';
+import { RiGroupLine } from 'react-icons/ri';
 import { BsPlayBtn } from 'react-icons/bs';
 import { MdStorefront } from 'react-icons/md';
 import { CgGames } from 'react-icons/cg';
 import { BsMessenger } from 'react-icons/bs';
-import { CgMenuGridO } from 'react-icons/cg';
 import { IoMdNotifications } from 'react-icons/io';
 import { BsFillCaretDownFill } from 'react-icons/bs';
-import { AiOutlineSearch } from 'react-icons/ai';
+
+import {
+	Container,
+	NavSection,
+	FacebookLogo,
+	Logo,
+	SearchContainer,
+	SearchIcon,
+	NavItem,
+	StyledLink,
+	NavItemRounded,
+	ProfileLink,
+	MenuGrid,
+} from './HeaderElements';
+
 const Header = () => {
 	return (
-		<>
-			<BsFacebook />
-			<AiFillHome />
-			<FaUserFriends />
-			<BsPlayBtn />
-			<MdStorefront />
-			<CgGames />
-			<BsMessenger />
-			<CgMenuGridO />
-			<IoMdNotifications />
-			<BsFillCaretDownFill />
-		</>
+		<Container>
+			<Logo>
+				<Link to="/home">
+					<FacebookLogo />
+				</Link>
+				<SearchContainer>
+					<SearchIcon />
+					<input type="text" placeholder="Search in Facebook" />
+				</SearchContainer>
+			</Logo>
+
+			<NavSection>
+				<NavItem>
+					<StyledLink to="/home" activeClassName="active" title="Home">
+						<AiOutlineHome />
+					</StyledLink>
+				</NavItem>
+				<NavItem>
+					<StyledLink to="/friends" activeClassName="active" title="Friends">
+						<RiGroupLine />
+					</StyledLink>
+				</NavItem>
+				<NavItem>
+					<StyledLink to="/watch" activeClassName="active" title="Watch">
+						<BsPlayBtn />
+					</StyledLink>
+				</NavItem>
+				<NavItem>
+					<StyledLink
+						to="/marketplace"
+						activeClassName="active"
+						title="Marketplace"
+					>
+						<MdStorefront />
+					</StyledLink>
+				</NavItem>
+				<NavItem>
+					<StyledLink to="/games" activeClassName="active" title="Games">
+						<CgGames />
+					</StyledLink>
+				</NavItem>
+			</NavSection>
+
+			<NavSection>
+				<ProfileLink>
+					<Link to="profile">
+						<img src={pic} alt="pic" />
+						<p>User</p>
+					</Link>
+				</ProfileLink>
+
+				<NavItemRounded>
+					<MenuGrid />
+				</NavItemRounded>
+
+				<NavItemRounded>
+					<BsMessenger />
+				</NavItemRounded>
+
+				<NavItemRounded>
+					<IoMdNotifications />
+				</NavItemRounded>
+
+				<NavItemRounded>
+					<BsFillCaretDownFill />
+				</NavItemRounded>
+			</NavSection>
+		</Container>
 	);
 };
 

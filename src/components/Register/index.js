@@ -10,20 +10,26 @@ import {
 	SelectWrapper,
 	Info,
 	Button,
+	ButtonContainer,
+	ErrorContainer,
 } from './RegisterElements';
 import { AiOutlineClose } from 'react-icons/ai';
 import { days, months, years } from '../../utils/dates';
+import { initialFormRegister, validationsForm } from '../../utils/validateForm';
+import { useForm } from '../../hooks/useForm';
+import { MdInfo } from 'react-icons/md';
 
 const Register = ({ setRegister }) => {
-	const [name, setName] = useState('');
-	const [surname, setSurname] = useState('');
-	const [email, setEmail] = useState('');
-	const [password, setPassword] = useState('');
-	const [birth, setBirth] = useState([]);
-	const [birthDay, setBirthday] = useState(null);
-	const [birthMoth, setBirthMonth] = useState(null);
-	const [birthYear, setBirthYear] = useState(null);
-	const [gender, setGender] = useState(null);
+	const {
+		form,
+		errors,
+		loading,
+		handleChange,
+		handleSubmit,
+		handleBlur,
+		handleRadioChange,
+		handleRadioBlur,
+	} = useForm(initialFormRegister, validationsForm);
 
 	return (
 		<Container>
@@ -40,47 +46,96 @@ const Register = ({ setRegister }) => {
 					</h1>
 					<h3>It's quick and easy.</h3>
 				</Header>
-				<Form>
+				<Form onSubmit={handleSubmit}>
 					<DoubleInput>
-						<input
-							type="text"
-							placeholder="First name"
-							name="name"
-							onChange={(e) => setName(e.target.value)}
-						/>
-						<input
-							type="text"
-							placeholder="Surname"
-							name="lastName"
-							onChange={(e) => setSurname(e.target.value)}
-						/>
+						<div>
+							<input
+								type="text"
+								placeholder="First name"
+								name="name"
+								value={form.name}
+								onChange={handleChange}
+								onBlur={handleBlur}
+								className={errors.name ? 'error' : ''}
+							/>
+							{errors.name && (
+								<ErrorContainer title={errors.name}>
+									<MdInfo />
+								</ErrorContainer>
+							)}
+						</div>
+
+						<div>
+							<input
+								type="text"
+								placeholder="Surname"
+								name="surname"
+								value={form.surname}
+								onChange={handleChange}
+								onBlur={handleBlur}
+								className={errors.surname ? 'error' : ''}
+							/>
+							{errors.surname && (
+								<ErrorContainer title={errors.surname}>
+									<MdInfo />
+								</ErrorContainer>
+							)}
+						</div>
 					</DoubleInput>
 					<InputContainer>
 						<input
 							type="email"
 							name="email"
+							value={form.email}
 							placeholder="Email address"
-							onChange={(e) => setEmail(e.target.value)}
+							onChange={handleChange}
+							onBlur={handleBlur}
+							className={errors.email ? 'error' : ''}
 						/>
+						{errors.email && (
+							<ErrorContainer title={errors.email}>
+								<MdInfo />
+							</ErrorContainer>
+						)}
 					</InputContainer>
 					<InputContainer>
 						<input
 							type="password"
 							name="password"
+							value={form.password}
 							placeholder="New Password"
-							onChange={(e) => setPassword(e.target.value)}
+							onChange={handleChange}
+							onBlur={handleBlur}
+							className={errors.password ? 'error' : ''}
 						/>
+						{errors.password && (
+							<ErrorContainer title={errors.password}>
+								<MdInfo />
+							</ErrorContainer>
+						)}
 					</InputContainer>
 					<InputContainerMultiple>
-						<div>Date of birth</div>
+						<div>
+							Date of birth{' '}
+							{errors.age && (
+								<ErrorContainer title={errors.age}>
+									<MdInfo />
+								</ErrorContainer>
+							)}
+						</div>
 						<SelectWrapper>
-							<span>
+							<span className={errors.age ? 'error' : ''}>
 								<select
-									name="birthday_day"
+									name="birthDay"
 									id="day"
 									title="Day"
-									onChange={(e) => setBirthday(e.target.value)}
+									value={form.birthDay}
+									onChange={handleChange}
+									onBlur={handleBlur}
 								>
+									<option value="" defaultValue disabled>
+										Day
+									</option>
 									{days.map((day, i) => (
 										<option value={day} key={'d-' + i}>
 											{day}
@@ -88,13 +143,18 @@ const Register = ({ setRegister }) => {
 									))}
 								</select>
 							</span>
-							<span>
+							<span className={errors.age ? 'error' : ''}>
 								<select
-									name="birthday_month"
+									name="birthMonth"
 									id="month"
 									title="Month"
-									onChange={(e) => setBirthMonth(e.target.value)}
+									value={form.birthMonth}
+									onChange={handleChange}
+									onBlur={handleBlur}
 								>
+									<option value="" defaultValue disabled>
+										Month
+									</option>
 									{months.map((month, i) => (
 										<option value={month} key={'m-' + i}>
 											{month}
@@ -102,13 +162,18 @@ const Register = ({ setRegister }) => {
 									))}
 								</select>
 							</span>
-							<span>
+							<span className={errors.age ? 'error' : ''}>
 								<select
-									name="birthday_year"
+									name="birthYear"
 									id="year"
 									title="Year"
-									onChange={(e) => setBirthYear(e.target.value)}
+									value={form.birthYear}
+									onChange={handleChange}
+									onBlur={handleBlur}
 								>
+									<option value="" defaultValue disabled>
+										Year
+									</option>
 									{years.map((year, i) => (
 										<option value={year} key={'y-' + i}>
 											{year}
@@ -119,46 +184,42 @@ const Register = ({ setRegister }) => {
 						</SelectWrapper>
 					</InputContainerMultiple>
 					<InputContainerMultiple>
-						<div>Gender</div>
-						<SelectWrapper id="sex">
-							<span>
+						<div>
+							Gender{' '}
+							{errors.sex && (
+								<ErrorContainer title={errors.sex}>
+									<MdInfo />
+								</ErrorContainer>
+							)}
+						</div>
+						<SelectWrapper
+							id="sex"
+							onChange={handleRadioChange}
+							onBlur={handleRadioBlur}
+						>
+							<span className={errors.sex ? 'error' : ''}>
 								<label htmlFor="female">Female</label>
-								<input
-									type="radio"
-									id="female"
-									name="sex"
-									onChange={(e) =>
-										setGender(e.target.value === 'on' && 'female')
-									}
-								/>
+								<input type="radio" id="female" name="sex" />
 							</span>
-							<span>
+							<span className={errors.sex ? 'error' : ''}>
 								<label htmlFor="male">Male</label>
-								<input
-									type="radio"
-									id="male"
-									name="sex"
-									onChange={(e) => setGender(e.target.value === 'on' && 'male')}
-								/>
+								<input type="radio" id="male" name="sex" />
 							</span>
-							<span>
+							<span className={errors.sex ? 'error' : ''}>
 								<label htmlFor="custom">Custom</label>
-								<input
-									type="radio"
-									id="custom"
-									name="sex"
-									onChange={(e) =>
-										setGender(e.target.value === 'on' && 'custom')
-									}
-								/>
+								<input type="radio" id="custom" name="sex" />
 							</span>
 						</SelectWrapper>
 					</InputContainerMultiple>
-					{gender === 'custom' && (
+					{form.sex === 'custom' && (
 						<>
 							<InputContainer>
-								<select name="pronoun">
-									<option value="" selected disabled>
+								<select
+									name="pronoun"
+									onChange={handleChange}
+									onBlur={handleBlur}
+								>
+									<option value="" defaultValue disabled>
 										Select your pronoun
 									</option>
 									<option value="she">She: "Wish her a happy birthday"</option>
@@ -169,7 +230,13 @@ const Register = ({ setRegister }) => {
 								</select>
 							</InputContainer>
 							<InputContainer>
-								<input type="text" placeholder="Gender (optional)" />
+								<input
+									type="text"
+									name="custom"
+									value={form.custom}
+									onChange={handleChange}
+									placeholder="Gender (optional)"
+								/>
 							</InputContainer>
 						</>
 					)}
@@ -179,7 +246,9 @@ const Register = ({ setRegister }) => {
 						Policy. You may receive SMS notifications from us and can opt out at
 						any time.
 					</Info>
-					<Button>Sign Up</Button>
+					<ButtonContainer>
+						<Button>Sign Up</Button>
+					</ButtonContainer>
 				</Form>
 			</RegisterModal>
 		</Container>

@@ -20,6 +20,10 @@ export const RegisterModal = styled.div`
 	justify-content: center;
 	border-radius: 8px;
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.1);
+
+	@media screen and (max-width: 768px) {
+		width: 350px;
+	}
 `;
 export const Header = styled.div`
 	padding: 10px 16px;
@@ -42,7 +46,8 @@ export const Header = styled.div`
 	border-bottom: 1px solid #ccd0d5;
 	margin-bottom: 10px;
 `;
-export const Form = styled.div`
+
+export const Form = styled.form`
 	width: 95%;
 	margin: auto;
 `;
@@ -51,6 +56,14 @@ export const DoubleInput = styled.div`
 	width: 100%;
 	justify-content: space-between;
 	margin: auto;
+	position: relative;
+
+	div {
+		display: flex;
+		align-items: center;
+		position: relative;
+	}
+
 	input {
 		border-radius: 5px;
 		font-size: 16px;
@@ -64,9 +77,22 @@ export const DoubleInput = styled.div`
 			color: #8d949e;
 		}
 	}
+
 	margin: 20px 0;
+	@media screen and (max-width: 768px) {
+		flex-direction: column;
+		margin: 0;
+		input:first-child {
+			margin: 20px 0;
+		}
+	}
 `;
 export const InputContainer = styled.div`
+	width: 100%;
+	display: flex;
+	align-items: center;
+	position: relative;
+
 	input {
 		border-radius: 5px;
 		padding: 12px;
@@ -89,14 +115,16 @@ export const InputContainer = styled.div`
 	}
 	margin: 20px 0;
 `;
+
 export const InputContainerMultiple = styled.div`
 	color: #606770;
-	font-family: SFProText-Medium, Helvetica, Arial, sans-serif;
 	font-size: 14px;
 	font-weight: normal;
 	line-height: 20px;
 	margin-bottom: 0;
 	margin-top: 2px;
+
+	position: relative;
 `;
 
 export const SelectWrapper = styled.div`
@@ -139,7 +167,6 @@ export const SelectWrapper = styled.div`
 	select {
 		border-radius: 4px;
 		color: #1c1e21;
-		font-family: SFProText-Medium, Helvetica, Arial, sans-serif;
 		font-size: 15px;
 		font-weight: normal;
 		height: 34px;
@@ -156,7 +183,8 @@ export const Info = styled.div`
 	font-size: 12px;
 	margin: 1rem 0;
 `;
-export const Button = styled.div`
+
+export const Button = styled.button`
 	width: 50%;
 	background: none;
 	background-color: #00a400;
@@ -165,7 +193,6 @@ export const Button = styled.div`
 	box-shadow: none;
 	color: #fff;
 	font-size: 20px;
-	font-weight: 600;
 	overflow: hidden;
 	padding: 5px 40px;
 	text-shadow: none;
@@ -174,10 +201,27 @@ export const Button = styled.div`
 	letter-spacing: normal;
 	cursor: pointer;
 	margin: 20px auto;
-	text-align: center;
 	transition: all 0.3s;
 
 	&:hover {
 		background: linear-gradient(#79bc64, #578843);
+	}
+
+	@media screen and (max-width: 480px) {
+		width: 70%;
+	}
+`;
+export const ButtonContainer = styled.div`
+	width: 100%;
+	text-align: center;
+`;
+
+export const ErrorContainer = styled.span`
+	position: absolute;
+	right: 9px;
+	margin-top: 5px;
+	svg {
+		font-size: 1.3rem;
+		color: red;
 	}
 `;
