@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { createUser, saveUserData } from '../firebase';
 
 export const useForm = (initialForm, validateForm) => {
 	const [form, setForm] = useState(initialForm);
@@ -34,11 +35,10 @@ export const useForm = (initialForm, validateForm) => {
 			return;
 		}
 		if (Object.keys(errors).length === 0) {
-			console.log('everything is ok');
 			//crear el usuario nuevo
+			createUser(form);
 			//pasar todos los datos del usuario a la base de datos
 			//una collection llamada users donde se iran almancenando todos
-
 			//users->data>{todos los datos del registro}
 			//users->friends->todos los amigos que haya agregado
 			//users->post->todos los post realizados->user who -comments-likes

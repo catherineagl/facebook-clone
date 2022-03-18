@@ -24,6 +24,8 @@ export const validationsForm = (form) => {
 	let birthday = new Date([form.birthYear, form.birthMonth, form.birthDay]);
 	let today = new Date();
 
+	form.birthday = birthday;
+
 	if (!form.name.trim()) {
 		errors.name = "What's your name?";
 	} else if (!regexName.test(form.name.trim())) {
@@ -67,13 +69,13 @@ export const validationsForm = (form) => {
 			errors.age =
 				"It looks like you've entered the wrong info. Please make sure that you use your real date of birth";
 	}
-
-	if (!form.sex) {
-		errors.sex = 'must select gender';
-	}
 	if (!form.birthDay || !form.birthMonth || !form.birthYear) {
 		errors.age =
 			"It looks like you've entered the wrong info. Please make sure that you use your real date of birth";
 	}
+	if (!form.sex) {
+		errors.sex = 'must select gender';
+	}
+
 	return errors;
 };

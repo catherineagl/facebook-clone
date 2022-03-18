@@ -23,12 +23,16 @@ import {
 	ProfileLink,
 	MenuGrid,
 } from './HeaderElements';
+import { useSelector } from 'react-redux';
+import { selectUserName } from '../../features/auth/authSlice';
 
 const Header = () => {
+	const userName = useSelector(selectUserName);
+
 	return (
 		<Container>
 			<Logo>
-				<Link to="/home">
+				<Link to="/">
 					<FacebookLogo />
 				</Link>
 				<SearchContainer>
@@ -39,7 +43,7 @@ const Header = () => {
 
 			<NavSection>
 				<NavItem>
-					<StyledLink to="/home" activeClassName="active" title="Home">
+					<StyledLink to="/" activeClassName="active" title="Home">
 						<AiOutlineHome />
 					</StyledLink>
 				</NavItem>
@@ -73,7 +77,7 @@ const Header = () => {
 				<ProfileLink>
 					<Link to="profile">
 						<img src={pic} alt="pic" />
-						<p>User</p>
+						<p>{userName}</p>
 					</Link>
 				</ProfileLink>
 

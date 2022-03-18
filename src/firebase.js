@@ -7,7 +7,16 @@ import {
 	onAuthStateChanged,
 } from 'firebase/auth';
 import { arrayUnion, getFirestore, updateDoc } from 'firebase/firestore';
-import { doc, setDoc, addDoc } from 'firebase/firestore';
+import {
+	doc,
+	setDoc,
+	query,
+	collection,
+	orderBy,
+	onSnapshot,
+} from 'firebase/firestore';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+
 const firebaseConfig = {
 	apiKey: 'AIzaSyAWHTyZf-iPi31MpUAjF4rlTLd-5zr8lF4',
 	authDomain: 'facebook-clone-df941.firebaseapp.com',
@@ -20,6 +29,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const db = getFirestore();
+const storage = getStorage(app);
 
 export const createUser = (form) => {
 	createUserWithEmailAndPassword(auth, form.email, form.password)
@@ -34,7 +44,7 @@ export const createUser = (form) => {
 				]);
 
 				//save data in collection
-				const userData = doc(db, 'users', user.uid, 'data');
+				const userData = doc(db, 'users', user.uid);
 				const data = {
 					name: form.name,
 					surname: form.surname,
@@ -59,14 +69,12 @@ export const createUser = (form) => {
 		});
 };
 
-export const signIn = (email, password) => {
-	const auth = getAuth();
+/* export const signIn = (email, password) => {
 	signInWithEmailAndPassword(auth, email, password)
 		.then((userCredential) => {
 			// Signed in
 			const user = userCredential.user;
 			console.log(user);
-
 			// ...
 		})
 		.catch((error) => {
@@ -74,24 +82,33 @@ export const signIn = (email, password) => {
 			const errorMessage = error.message;
 			alert(`Error ${errorCode}: ${errorMessage}`);
 		});
+}; */
+
+export const createPost = async (data) => {
+	let imgUrl = null;
+
+	if (data.image) {
+		try {
+			const imageRef = ref(storage, `images/${data.id}`);
+			await uploadBytes(imageRef, data.image);
+			imgUrl = await getDownloadURL(imageRef);
+			console.log(imgUrl);
+		} catch (error) {
+			console.log('error uploading file');
+		}
+	}
+	const userPosts = doc(db, 'posts', data.id);
+	await setDoc(userPosts, { ...data, image: imgUrl });
+	const userData = doc(db, 'users', 'YzwZ4BdjzQecGhbOH64zNMcYn3t2');
+	updateDoc(userData, { posts: arrayUnion(data.id) });
+	console.log('update suscessfull');
 };
 
-export const checkUser = () => {
-	onAuthStateChanged(auth, (user) => {
-		if (user) {
-			const uid = user.uid;
-
-			console.log(uid);
-		} else {
-		}
+export const getPosts = async () => {
+	const q = query(collection(db, 'posts'));
+	onSnapshot(q, (querySnapshot) => {
+		querySnapshot.docs.map((snap) => snap.data());
 	});
 };
 
-export const createPost = (data) => {
-	const userPosts = doc(db, 'posts', 'DzrBdztD4rOkq97nepVT9EcFfgc2', data.id);
-	setDoc(userPosts, data);
-	/* const userData = doc(db, 'users', 'DzrBdztD4rOkq97nepVT9EcFfgc2');
-	updateDoc(userData, { posts: arrayUnion(data.uid) }); */
-	console.log('update suscessfull');
-};
-// Initialize Firebase
+export default db;

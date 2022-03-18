@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+/* import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom'; */
 import { sidebarItems } from '../data';
 import {
 	Container,
@@ -21,12 +21,32 @@ import pic from '../../images/pic.png';
 import Storie from '../Storie';
 import CreatePost from '../CreatePost';
 import Post from '../Post';
+import { useSelector } from 'react-redux';
+import { selectUserName } from '../../features/auth/authSlice';
+import { selectUserSurname } from '../../features/auth/authSlice';
+
 const Home = () => {
+	const userName = useSelector(selectUserName);
+	const userSurname = useSelector(selectUserSurname);
+	//const [posts, setPosts] = useState([]);
+	/* useEffect(() => {
+		const getAllPost = async () => {
+			const allPosts = await getPosts();
+			console.log(allPosts);
+			setPosts(allPosts);
+		};
+		getAllPost();
+	}, []); */
+
 	return (
 		<Container>
 			<Section>
 				<Sidebar>
-					<SidebarItem name="User Complete" link={pic} linkTo="/profile" />
+					<SidebarItem
+						name={`${userName} ${userSurname}`}
+						link={pic}
+						linkTo="/profile"
+					/>
 					{sidebarItems.map((item, i) => (
 						<SidebarItem
 							name={item.name}
@@ -55,7 +75,9 @@ const Home = () => {
 					<CreatePost />
 
 					<Posts>
-						<Post />
+						{/* {posts?.map((post) => (
+							<Post post={post} />
+						))} */}
 					</Posts>
 				</Main>
 			</Section>

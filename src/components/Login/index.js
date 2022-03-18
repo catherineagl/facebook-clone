@@ -16,8 +16,29 @@ import {
 	ButtonContainer,
 } from './LoginElements';
 
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+
 const Login = () => {
 	const [register, setRegister] = useState(false);
+
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
+
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+
+		if (!email) return;
+		if (!password) return;
+
+		const auth = getAuth();
+		try {
+			await signInWithEmailAndPassword(auth, email, password);
+		} catch (error) {
+			const errorCode = error.code;
+			const errorMessage = error.message;
+			alert(`Error ${errorCode}: ${errorMessage}`);
+		}
+	};
 
 	return (
 		<>
@@ -37,10 +58,22 @@ const Login = () => {
 					</Column>
 
 					<Column>
-						<Form>
+						<Form onSubmit={handleSubmit}>
 							<InputContainer>
-								<input type="text" placeholder="Email address" name="email" />
-								<input type="password" placeholder="Password" name="password" />
+								<input
+									type="text"
+									placeholder="Email address"
+									name="email"
+									value={email}
+									onChange={(e) => setEmail(e.target.value)}
+								/>
+								<input
+									type="password"
+									placeholder="Password"
+									name="password"
+									value={password}
+									onChange={(e) => setPassword(e.target.value)}
+								/>
 							</InputContainer>
 							<ButtonContainer>
 								<ButtonLogin>Log in</ButtonLogin>

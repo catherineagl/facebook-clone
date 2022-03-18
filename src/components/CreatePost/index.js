@@ -9,11 +9,16 @@ import {
 	Happy,
 } from './CreatePostElements';
 import pic from '../../images/pic.png';
-import PostModal from '../PostModal';
+import CreatePostModal from '../CreatePostModal';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { selectUserName } from '../../features/auth/authSlice';
 
 const CreatePost = () => {
+	const userName = useSelector(selectUserName);
 	const [postMsg, setPostMsg] = useState('');
+	const [image, setImage] = useState(null);
+
 	const [showModal, setShowModal] = useState('');
 
 	return (
@@ -25,7 +30,7 @@ const CreatePost = () => {
 					</Link>
 					<input
 						type="text"
-						placeholder="What are you thinking, User?"
+						placeholder={`What are you thinking, ${userName}?`}
 						value={postMsg}
 						onChange={(e) => setPostMsg(e.target.value)}
 						onClick={() => setShowModal(true)}
@@ -47,11 +52,13 @@ const CreatePost = () => {
 				</Row>
 			</Container>
 			{showModal && (
-				<PostModal
+				<CreatePostModal
 					showModal={showModal}
 					setShowModal={setShowModal}
 					setPostMsg={setPostMsg}
 					postMsg={postMsg}
+					image={image}
+					setImage={setImage}
 				/>
 			)}
 		</>
