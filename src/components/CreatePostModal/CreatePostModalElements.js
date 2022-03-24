@@ -44,6 +44,7 @@ export const UserInfo = styled.div`
 		height: 40px;
 		border-radius: 50%;
 		margin-right: 10px;
+		object-fit: cover;
 	}
 `;
 export const PostContainer = styled.div`

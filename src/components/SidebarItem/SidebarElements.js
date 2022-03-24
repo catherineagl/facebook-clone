@@ -12,6 +12,7 @@ export const NavItem = styled.div`
 			height: 36px;
 			margin: 8px 12px 8px;
 			border-radius: 50%;
+			object-fit: cover;
 		}
 		color: #050505;
 		font-weight: bold;

@@ -58,7 +58,7 @@ const Login = () => {
 					</Column>
 
 					<Column>
-						<Form onSubmit={handleSubmit}>
+						<Form>
 							<InputContainer>
 								<input
 									type="text"
@@ -76,7 +76,7 @@ const Login = () => {
 								/>
 							</InputContainer>
 							<ButtonContainer>
-								<ButtonLogin>Log in</ButtonLogin>
+								<ButtonLogin onClick={handleSubmit}>Log in</ButtonLogin>
 							</ButtonContainer>
 							<ForgotPass>
 								<Link to="/forgotpass">

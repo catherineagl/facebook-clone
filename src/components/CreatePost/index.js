@@ -12,10 +12,11 @@ import pic from '../../images/pic.png';
 import CreatePostModal from '../CreatePostModal';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { selectUserName } from '../../features/auth/authSlice';
+import { selectUserName, selectUserPhoto } from '../../features/auth/authSlice';
 
 const CreatePost = () => {
 	const userName = useSelector(selectUserName);
+	const userPhoto = useSelector(selectUserPhoto);
 	const [postMsg, setPostMsg] = useState('');
 	const [image, setImage] = useState(null);
 
@@ -26,7 +27,11 @@ const CreatePost = () => {
 			<Container>
 				<RowInfo>
 					<Link to="/profile">
-						<img src={pic} alt="" />
+						{userPhoto ? (
+							<img src={userPhoto} alt="" />
+						) : (
+							<img src={pic} alt="" />
+						)}
 					</Link>
 					<input
 						type="text"

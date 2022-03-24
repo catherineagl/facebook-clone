@@ -1,5 +1,5 @@
-/* import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom'; */
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { sidebarItems } from '../data';
 import {
 	Container,
@@ -21,22 +21,30 @@ import pic from '../../images/pic.png';
 import Storie from '../Storie';
 import CreatePost from '../CreatePost';
 import Post from '../Post';
-import { useSelector } from 'react-redux';
-import { selectUserName } from '../../features/auth/authSlice';
-import { selectUserSurname } from '../../features/auth/authSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+	selectUserName,
+	selectUserSurname,
+	selectUserPhoto,
+} from '../../features/auth/authSlice';
+import db from '../../firebase';
+import { query, collection, onSnapshot, orderBy } from 'firebase/firestore';
+import { SelectAllPosts, setPosts } from '../../features/posts/postsSlice';
 
 const Home = () => {
 	const userName = useSelector(selectUserName);
+	const userPhoto = useSelector(selectUserPhoto);
 	const userSurname = useSelector(selectUserSurname);
-	//const [posts, setPosts] = useState([]);
-	/* useEffect(() => {
-		const getAllPost = async () => {
-			const allPosts = await getPosts();
-			console.log(allPosts);
-			setPosts(allPosts);
-		};
-		getAllPost();
-	}, []); */
+	const allPosts = useSelector(SelectAllPosts);
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		const q = query(collection(db, 'posts'), orderBy('timestamp', 'desc'));
+		onSnapshot(q, (querySnapshot) => {
+			let posts = querySnapshot.docs.map((snap) => snap.data());
+			dispatch(setPosts(posts));
+		});
+	}, []);
 
 	return (
 		<Container>
@@ -44,7 +52,7 @@ const Home = () => {
 				<Sidebar>
 					<SidebarItem
 						name={`${userName} ${userSurname}`}
-						link={pic}
+						link={userPhoto ? userPhoto : pic}
 						linkTo="/profile"
 					/>
 					{sidebarItems.map((item, i) => (
@@ -75,9 +83,9 @@ const Home = () => {
 					<CreatePost />
 
 					<Posts>
-						{/* {posts?.map((post) => (
+						{allPosts?.map((post) => (
 							<Post post={post} />
-						))} */}
+						))}
 					</Posts>
 				</Main>
 			</Section>

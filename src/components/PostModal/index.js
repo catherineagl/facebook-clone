@@ -39,7 +39,7 @@ import { BiLike, BiComment } from 'react-icons/bi';
 import { AiOutlineCamera } from 'react-icons/ai';
 import { RiEmotionHappyLine } from 'react-icons/ri';
 import { Link } from 'react-router-dom';
-const PostModal = ({ setShowFullView }) => {
+const PostModal = ({ setShowFullView, post }) => {
 	return (
 		<Container>
 			<ImgFullView>
@@ -53,10 +53,7 @@ const PostModal = ({ setShowFullView }) => {
 					</Link>
 				</FullViewActions>
 				<FullImgContainer>
-					<img
-						src="https://scontent-mia3-2.xx.fbcdn.net/v/t39.30808-6/275772288_154678483657920_3227318720304782588_n.jpg?_nc_cat=109&ccb=1-5&_nc_sid=5cd70e&_nc_ohc=mvkiPsO-B7cAX8ZaaBR&_nc_ht=scontent-mia3-2.xx&oh=00_AT_oQEMD8ehxteUs3vQ3Ws7dV0BBR0Raem4_zBhfr06YpA&oe=62359C06"
-						alt=""
-					/>
+					<img src={post.image} alt="" />
 				</FullImgContainer>
 			</ImgFullView>
 			<PostSection>
@@ -80,21 +77,18 @@ const PostModal = ({ setShowFullView }) => {
 							<img src={pic} alt="img" />
 						</ImgContainer>
 						<PostInfo>
-							<h3>User Name</h3>
-							<p>11 de marzo a las 19:07</p>
+							<h3>{post.user}</h3>
+							<p>{post.timestamp}</p>
 						</PostInfo>
 					</PostHeading>
-					<PostDescription>
-						Find Freelance jobs that help change the wordl sign up fro free
-						today!
-					</PostDescription>
+					<PostDescription>{post.text}</PostDescription>
 					<PostInteractions>
 						<InteractionsCount>
 							<PostLikes>
 								<img src={like} alt="" />
-								<span>10</span>
+								<span>{post.likes}</span>
 							</PostLikes>
-							<PostComments>10 comments</PostComments>
+							<PostComments>{post.comments.length} comments</PostComments>
 						</InteractionsCount>
 						<LineSeparator />
 						<PostOptions>

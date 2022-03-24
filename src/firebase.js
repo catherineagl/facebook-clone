@@ -27,9 +27,9 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const auth = getAuth();
-const db = getFirestore();
-const storage = getStorage(app);
+export const auth = getAuth();
+export const db = getFirestore();
+export const storage = getStorage(app);
 
 export const createUser = (form) => {
 	createUserWithEmailAndPassword(auth, form.email, form.password)
@@ -54,6 +54,7 @@ export const createUser = (form) => {
 					sex: form.sex,
 					pronoun: form.pronoun,
 					custom: form.custom,
+					image: '',
 					friends: [],
 					posts: [],
 				};
@@ -104,11 +105,11 @@ export const createPost = async (data) => {
 	console.log('update suscessfull');
 };
 
-export const getPosts = async () => {
+/* export const getPosts = async () => {
 	const q = query(collection(db, 'posts'));
 	onSnapshot(q, (querySnapshot) => {
 		querySnapshot.docs.map((snap) => snap.data());
 	});
 };
-
+ */
 export default db;

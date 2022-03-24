@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
 	width: 100%;
+	margin-bottom: 1rem;
 	background-color: #e4e6eb;
 	background-color: #fff;
 	overflow-x: hidden;
@@ -21,6 +22,8 @@ export const ImgContainer = styled.div`
 	img {
 		border-radius: 50%;
 		width: 100%;
+		height: 100%;
+		object-fit: cover;
 	}
 `;
 export const PostInfo = styled.div`

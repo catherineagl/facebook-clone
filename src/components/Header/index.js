@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, NavLink } from 'react-router-dom';
 import pic from '../../images/pic.png';
 import { AiOutlineHome } from 'react-icons/ai';
 import { RiGroupLine } from 'react-icons/ri';
@@ -24,10 +24,13 @@ import {
 	MenuGrid,
 } from './HeaderElements';
 import { useSelector } from 'react-redux';
-import { selectUserName } from '../../features/auth/authSlice';
+import { selectUserName, selectUserPhoto } from '../../features/auth/authSlice';
+import FloatMenu from '../FloatMenu';
 
 const Header = () => {
 	const userName = useSelector(selectUserName);
+	const userPhoto = useSelector(selectUserPhoto);
+	const [showFloatMenu, setShowFloatMenu] = useState(false);
 
 	return (
 		<Container>
@@ -75,10 +78,14 @@ const Header = () => {
 
 			<NavSection>
 				<ProfileLink>
-					<Link to="profile">
-						<img src={pic} alt="pic" />
+					<NavLink to="/profile" activeClassName="active">
+						{userPhoto ? (
+							<img src={userPhoto} alt="" />
+						) : (
+							<img src={pic} alt="" />
+						)}
 						<p>{userName}</p>
-					</Link>
+					</NavLink>
 				</ProfileLink>
 
 				<NavItemRounded>
@@ -93,10 +100,12 @@ const Header = () => {
 					<IoMdNotifications />
 				</NavItemRounded>
 
-				<NavItemRounded>
+				<NavItemRounded onClick={() => setShowFloatMenu(!showFloatMenu)}>
 					<BsFillCaretDownFill />
 				</NavItemRounded>
 			</NavSection>
+
+			{showFloatMenu && <FloatMenu />}
 		</Container>
 	);
 };

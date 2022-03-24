@@ -27,6 +27,7 @@ export const RowInfo = styled.div`
 		width: 40px;
 		height: 40px;
 		border-radius: 50%;
+		object-fit: cover;
 	}
 	input {
 		flex: 1;

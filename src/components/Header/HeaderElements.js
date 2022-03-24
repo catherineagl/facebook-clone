@@ -128,7 +128,6 @@ export const ProfileLink = styled.li`
 	justify-content: space-between;
 	height: 36px;
 	width: fit-content;
-	padding: 0.5rem 0.7rem 0.5rem 0.25rem;
 	border-radius: 50px;
 	margin: auto;
 	margin-right: 5px;
@@ -146,11 +145,18 @@ export const ProfileLink = styled.li`
 		align-items: center;
 		text-decoration: none;
 		color: #050505;
+		padding: 0.25rem 0.7rem 0.25rem 0.25rem;
+
+		border-radius: 50px;
 	}
 	p {
 		display: inline-block;
 	}
 
+	.active {
+		background-color: #e7f3ff;
+		color: #1b74e4;
+	}
 	&:hover {
 		background-color: #f0f2f5;
 	}

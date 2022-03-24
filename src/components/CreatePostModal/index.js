@@ -15,11 +15,17 @@ import {
 } from './CreatePostModalElements';
 import Picker from 'emoji-picker-react';
 import pic from '../../images/pic.png';
-import { createPost } from '../../firebase';
 import uniqid from 'uniqid';
 import { useSelector } from 'react-redux';
-import { selectUserName } from '../../features/auth/authSlice';
+import {
+	selectUserId,
+	selectUserName,
+	selectUserPhoto,
+} from '../../features/auth/authSlice';
 import { selectUserSurname } from '../../features/auth/authSlice';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import db, { storage } from '../../firebase';
+import { doc, setDoc, arrayUnion, updateDoc } from 'firebase/firestore';
 
 const CreatePostModal = ({
 	setShowModal,
@@ -28,11 +34,33 @@ const CreatePostModal = ({
 	image,
 	setImage,
 }) => {
+	const userId = useSelector(selectUserId);
 	const userName = useSelector(selectUserName);
 	const userSurname = useSelector(selectUserSurname);
-
+	const userPhoto = useSelector(selectUserPhoto);
 	const fileInputRef = React.createRef();
 	const [showPicker, setShowPicker] = useState(false);
+
+	const createPost = async (data) => {
+		let imgUrl = null;
+
+		if (data.image) {
+			try {
+				const imageRef = ref(storage, `images/${data.id}`);
+				await uploadBytes(imageRef, data.image);
+				imgUrl = await getDownloadURL(imageRef);
+			} catch (error) {
+				console.log('error uploading file');
+			}
+		}
+		const userPosts = doc(db, 'posts', data.id);
+		await setDoc(userPosts, { ...data, image: imgUrl });
+		const userData = doc(db, 'users', data.uid);
+		updateDoc(userData, { posts: arrayUnion(data.id) });
+		setPostMsg('');
+		setImage('');
+		setShowModal(false);
+	};
 
 	const handleImage = (e) => {
 		const file = e.target.files[0];
@@ -54,6 +82,9 @@ const CreatePostModal = ({
 
 		let data = {
 			id: uniqid(),
+			uid: userId,
+			userImg: userPhoto,
+			user: userName + ' ' + userSurname,
 			text: postMsg,
 			image: image,
 			timestamp: Date.now(),
@@ -75,7 +106,12 @@ const CreatePostModal = ({
 				<CloseBtn onClick={() => setShowModal(false)} />
 				<Wrapper>
 					<UserInfo>
-						<img src={pic} alt="" />
+						{userPhoto ? (
+							<img src={userPhoto} alt="" />
+						) : (
+							<img src={pic} alt="" />
+						)}
+
 						<span>
 							{userName} {userSurname}
 						</span>

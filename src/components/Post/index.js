@@ -27,41 +27,47 @@ import { BiLike, BiComment } from 'react-icons/bi';
 import { AiOutlineCamera } from 'react-icons/ai';
 import { RiEmotionHappyLine } from 'react-icons/ri';
 import PostModal from '../PostModal';
+import {
+	selectUserName,
+	selectUserSurname,
+} from '../../features/auth/authSlice';
+import { useSelector } from 'react-redux';
 
-const Post = (props) => {
+const Post = ({ post }) => {
 	const [showFullView, setShowFullView] = useState(false);
 	const [showCommentSection, setShowCommentSection] = useState(false);
-	const [likes, setLikes] = useState(1);
 	const [liked, setLiked] = useState(false);
-	console.log(props);
+
+	const userName = useSelector(selectUserName);
+	const userSurname = useSelector(selectUserSurname);
+	console.log(post);
+	let date = new Date(post.timestamp);
+
 	return (
 		<>
-			<Container>
+			<Container key={post.id}>
 				<PostHeading>
 					<ImgContainer>
-						<img src={pic} alt="img" />
+						<img src={post.userImg || pic} alt="img" />
 					</ImgContainer>
 					<PostInfo>
-						<h3>User Name</h3>
-						<p>11 de marzo a las 19:07</p>
+						<h3>{post.user}</h3>
+						<p>{date.toLocaleDateString()}</p>
 					</PostInfo>
 				</PostHeading>
-				<PostDescription>
-					Find Freelance jobs that help change the wordl sign up fro free today!
-				</PostDescription>
-				<PostMedia onClick={() => setShowFullView(true)}>
-					<img
-						src="https://scontent-mia3-1.xx.fbcdn.net/v/t39.30808-6/275783035_408585707756744_1455986218614581055_n.jpg?stp=dst-jpg_s960x960&_nc_cat=1&ccb=1-5&_nc_sid=730e14&_nc_ohc=GoO1BiJED1cAX_r7WYy&tn=VZh3qYKfMnUXWjgr&_nc_ht=scontent-mia3-1.xx&oh=00_AT-WGydo3Rso1NxZ23xWFdUOJEBayr4memnr5jeysbeljw&oe=6234F872"
-						alt=""
-					/>
-				</PostMedia>
+				<PostDescription>{post.text}</PostDescription>
+				{post.image && (
+					<PostMedia onClick={() => setShowFullView(true)}>
+						<img src={post.image} alt="" />
+					</PostMedia>
+				)}
 				<PostInteractions>
 					<InteractionsCount>
 						<PostLikes>
 							<img src={like} alt="" />
-							<span>{likes}</span>
+							<span>{post.likes}</span>
 						</PostLikes>
-						<PostComments>10 comments</PostComments>
+						<PostComments>{post.comments.length} comments</PostComments>
 					</InteractionsCount>
 					<LineSeparator />
 					<PostOptions>
@@ -107,7 +113,9 @@ const Post = (props) => {
 					)}
 				</PostInteractions>
 			</Container>
-			{showFullView && <PostModal setShowFullView={setShowFullView} />}
+			{showFullView && (
+				<PostModal setShowFullView={setShowFullView} post={post} />
+			)}
 		</>
 	);
 };
