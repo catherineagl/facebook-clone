@@ -85,7 +85,7 @@ export const createUser = (form) => {
 		});
 }; */
 
-export const createPost = async (data) => {
+/* export const createPost = async (data) => {
 	let imgUrl = null;
 
 	if (data.image) {
@@ -103,7 +103,7 @@ export const createPost = async (data) => {
 	const userData = doc(db, 'users', 'YzwZ4BdjzQecGhbOH64zNMcYn3t2');
 	updateDoc(userData, { posts: arrayUnion(data.id) });
 	console.log('update suscessfull');
-};
+}; */
 
 /* export const getPosts = async () => {
 	const q = query(collection(db, 'posts'));

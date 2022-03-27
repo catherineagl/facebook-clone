@@ -138,7 +138,8 @@ const Profile = () => {
 				<UserDetails></UserDetails>
 				<UserPosts>
 					<CreatePost />
-					{userPosts && userPosts.map((post) => <Post post={post} />)}
+					{userPosts &&
+						userPosts.map((post) => <Post key={post.id} post={post} />)}
 				</UserPosts>
 			</Content>
 		</Container>

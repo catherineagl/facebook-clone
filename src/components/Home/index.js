@@ -26,23 +26,30 @@ import {
 	selectUserName,
 	selectUserSurname,
 	selectUserPhoto,
+	selectUserId,
 } from '../../features/auth/authSlice';
 import db from '../../firebase';
 import { query, collection, onSnapshot, orderBy } from 'firebase/firestore';
 import { SelectAllPosts, setPosts } from '../../features/posts/postsSlice';
+import { selectUserFriends } from '../../features/friends/friendsSlice';
 
 const Home = () => {
+	const userId = useSelector(selectUserId);
 	const userName = useSelector(selectUserName);
 	const userPhoto = useSelector(selectUserPhoto);
 	const userSurname = useSelector(selectUserSurname);
 	const allPosts = useSelector(SelectAllPosts);
+	const userFriendsId = useSelector(selectUserFriends);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
 		const q = query(collection(db, 'posts'), orderBy('timestamp', 'desc'));
 		onSnapshot(q, (querySnapshot) => {
 			let posts = querySnapshot.docs.map((snap) => snap.data());
-			dispatch(setPosts(posts));
+			let userFriendsPosts = posts.filter(
+				(item) => userFriendsId.includes(item.uid) || item.uid === userId
+			);
+			dispatch(setPosts(userFriendsPosts));
 		});
 	}, []);
 
@@ -84,7 +91,7 @@ const Home = () => {
 
 					<Posts>
 						{allPosts?.map((post) => (
-							<Post post={post} />
+							<Post key={post.id} post={post} />
 						))}
 					</Posts>
 				</Main>
@@ -95,27 +102,28 @@ const Home = () => {
 					<CardContainer>
 						<ImgContainer>
 							<img
-								src="https://scontent-mia3-1.xx.fbcdn.net/v/t45.1600-4/245716496_23849154052150187_7888444483895837686_n.png?stp=cp0_dst-jpg_p960x960_q90_spS444&_nc_cat=104&ccb=1-5&_nc_sid=67cdda&_nc_ohc=IkaIYjxrCQEAX-keKww&tn=VZh3qYKfMnUXWjgr&_nc_ht=scontent-mia3-1.xx&oh=00_AT8lKtnFOEHM8PYzmlVF7hh-_T_Wrjvgg-csmnTS9kd7xQ&oe=62311D48"
+								src="https://scontent-mia3-2.xx.fbcdn.net/v/t45.1600-4/200057800_23848947295910426_1278154784839003130_n.png?stp=cp0_dst-jpg_p296x100_q90_spS444&_nc_cat=105&ccb=1-5&_nc_sid=67cdda&_nc_ohc=Pz_T6A2mW_8AX8PzGZ1&_nc_ht=scontent-mia3-2.xx&oh=00_AT9pHTuspfvIe0oGTP1wvecnVB4Wr6-EFSKmXcmG4Sq9kA&oe=62457918"
 								alt=""
 							/>
 						</ImgContainer>
 						<PromoWrapper>
-							<h4>TECH school of videogame design</h4>
-							<span>techtitude.com</span>
+							<h4>Make a positive Impact</h4>
+							<span>workforimpact.com</span>
 						</PromoWrapper>
 					</CardContainer>
 					<CardContainer>
 						<ImgContainer>
 							<img
-								src="https://scontent-mia3-1.xx.fbcdn.net/v/t45.1600-4/53801610_23843229677150748_6573402409500934144_n.png?stp=cp0_dst-jpg_p160x160_q90_spS444&_nc_cat=101&ccb=1-5&_nc_sid=67cdda&_nc_ohc=JQxrnsTUJ9gAX9kGjBK&tn=VZh3qYKfMnUXWjgr&_nc_ht=scontent-mia3-1.xx&oh=00_AT8hZ97u7Qt7Yp4VOt3Bj0QDFEenUIpOfhEcwB27mbnxnw&oe=622FA9D5"
+								src="https://scontent-mia3-2.xx.fbcdn.net/v/t45.1600-4/275789768_23849612017550510_7101802000718438079_n.png?stp=cp0_dst-jpg_p296x100_q90_spS444&_nc_cat=1&ccb=1-5&_nc_sid=67cdda&_nc_ohc=2jB67jAMXgsAX9XwZD5&_nc_ht=scontent-mia3-2.xx&oh=00_AT98FzG3QrFUIQ15aLBB6Fc7RQW8TE6nOW2eTm7oBLpnLA&oe=62458CED"
 								alt=""
 							/>
 						</ImgContainer>
 						<PromoWrapper>
 							<h4>
-								Only with this post: <br /> Explore more at our website
+								Official Ronaldinho NFT
+								<br /> Collection
 							</h4>
-							<span>knowmoreplatform.com</span>
+							<span>shirtum.com</span>
 						</PromoWrapper>
 					</CardContainer>
 

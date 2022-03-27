@@ -34,7 +34,7 @@ const FloatMenu = () => {
 				dispatch(setSignOutState());
 			})
 			.catch((error) => {
-				console.log('error');
+				console.log('error log out');
 			});
 	};
 

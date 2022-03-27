@@ -27,20 +27,12 @@ import { BiLike, BiComment } from 'react-icons/bi';
 import { AiOutlineCamera } from 'react-icons/ai';
 import { RiEmotionHappyLine } from 'react-icons/ri';
 import PostModal from '../PostModal';
-import {
-	selectUserName,
-	selectUserSurname,
-} from '../../features/auth/authSlice';
-import { useSelector } from 'react-redux';
 
 const Post = ({ post }) => {
 	const [showFullView, setShowFullView] = useState(false);
 	const [showCommentSection, setShowCommentSection] = useState(false);
 	const [liked, setLiked] = useState(false);
 
-	const userName = useSelector(selectUserName);
-	const userSurname = useSelector(selectUserSurname);
-	console.log(post);
 	let date = new Date(post.timestamp);
 
 	return (

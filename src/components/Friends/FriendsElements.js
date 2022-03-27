@@ -17,10 +17,10 @@ export const Sidebar = styled.div`
 `;
 
 export const FriendIcon = styled(FaUserFriends)`
-	font-size: 1.5rem;
+	font-size: 1.25rem;
 `;
 export const AddFriendIcon = styled(IoPersonAdd)`
-	font-size: 1.5rem;
+	font-size: 1.25rem;
 `;
 export const Item = styled.div`
 	padding: 0.5rem 0.25rem;
@@ -32,8 +32,9 @@ export const Item = styled.div`
 	border-radius: 8px;
 
 	span {
-		font-size: 1.2rem;
+		font-size: 1rem;
 		margin-left: 8px;
+		font-weight: bold;
 	}
 
 	&:hover {
@@ -61,4 +62,15 @@ export const Content = styled.div`
 export const FriendsContainer = styled.div`
 	display: flex;
 	flex-wrap: wrap;
+`;
+
+export const EmptyFriendSection = styled.div`
+	display: flex;
+	margin: auto;
+	width: 500px;
+	align-items: center;
+	justify-content: center;
+	img {
+		width: 100%;
+	}
 `;

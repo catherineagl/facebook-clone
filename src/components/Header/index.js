@@ -46,31 +46,47 @@ const Header = () => {
 
 			<NavSection>
 				<NavItem>
-					<StyledLink to="/" activeClassName="active" title="Home">
+					<StyledLink
+						to="/"
+						className={(navData) => (navData.isActive ? 'active' : '')}
+						title="Home"
+					>
 						<AiOutlineHome />
 					</StyledLink>
 				</NavItem>
 				<NavItem>
-					<StyledLink to="/friends" activeClassName="active" title="Friends">
+					<StyledLink
+						to="/friends"
+						className={(navData) => (navData.isActive ? 'active' : '')}
+						title="Friends"
+					>
 						<RiGroupLine />
 					</StyledLink>
 				</NavItem>
 				<NavItem>
-					<StyledLink to="/watch" activeClassName="active" title="Watch">
+					<StyledLink
+						to="/watch"
+						className={(navData) => (navData.isActive ? 'active' : '')}
+						title="Watch"
+					>
 						<BsPlayBtn />
 					</StyledLink>
 				</NavItem>
 				<NavItem>
 					<StyledLink
 						to="/marketplace"
-						activeClassName="active"
+						className={(navData) => (navData.isActive ? 'active' : '')}
 						title="Marketplace"
 					>
 						<MdStorefront />
 					</StyledLink>
 				</NavItem>
 				<NavItem>
-					<StyledLink to="/games" activeClassName="active" title="Games">
+					<StyledLink
+						to="/games"
+						className={(navData) => (navData.isActive ? 'active' : '')}
+						title="Games"
+					>
 						<CgGames />
 					</StyledLink>
 				</NavItem>
@@ -78,7 +94,10 @@ const Header = () => {
 
 			<NavSection>
 				<ProfileLink>
-					<NavLink to="/profile" activeClassName="active">
+					<NavLink
+						to="/profile"
+						className={(navData) => (navData.isActive ? 'active' : '')}
+					>
 						{userPhoto ? (
 							<img src={userPhoto} alt="" />
 						) : (
