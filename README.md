@@ -1,70 +1,55 @@
-# Getting Started with Create React App
+EN
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+- Facebook clone created with React.js
+- Styled with Styled Components
+- backend with firebase
 
-## Available Scripts
+\*Features
 
-In the project directory, you can run:
+- form validation
+- user registration and login
+- the user can place his profile picture and cover
+- the user can create posts and see friends posts
+- in profile it only shows the posts created by the user
+- user can add and remove friends
+- storage of friends and posts in firestore
+- We save the uploaded images in firebase storage and then display them in the app
 
-### `npm start`
+\*Coming next:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- be able to like the photos
+- comment on posts
+- add stories
+- delete some post
+- display more information about the user
+- view friends profile
+- delete your user account
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+====================================================
 
-### `npm test`
+ES
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Clone de Facebook creado con React.js
+- Estilos con Styled components
+- Backend con firebase
 
-### `npm run build`
+\*Caracteristicas:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- validacion de formularios
+- registro de usuario e inicio de sesion
+- el usuario puede colocar su foto de perfil y cover
+- el usuario puede crear posts y ver los posts de sus amigos
+- en profile solo muestra los post creados por el usuario
+- el usuario puede agregar y eliminar amigos
+- almacenamiento de los amigos y los post en firestore
+- guardamos las imagenes subidas en firebase storage para luego desplegarlas en la app
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+\*Por terminar:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- poder dar like a las fotos
+- comentar posts
+- agregar stories
+- eliminar algun post
+- mostrar mas informacion acerca del usuario
+- visualizar el perfil de los amigos
+- eliminar tu cuenta de usuario
