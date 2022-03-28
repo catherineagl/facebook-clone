@@ -29,9 +29,21 @@ import {
 	selectUserId,
 } from '../../features/auth/authSlice';
 import db from '../../firebase';
-import { query, collection, onSnapshot, orderBy } from 'firebase/firestore';
+import {
+	query,
+	collection,
+	onSnapshot,
+	orderBy,
+	doc,
+	getDoc,
+} from 'firebase/firestore';
 import { SelectAllPosts, setPosts } from '../../features/posts/postsSlice';
-import { selectUserFriends } from '../../features/friends/friendsSlice';
+import {
+	selectUserFriends,
+	setNoFriends,
+	setShowFriends,
+	setUserFriends,
+} from '../../features/friends/friendsSlice';
 
 const Home = () => {
 	const userId = useSelector(selectUserId);
@@ -40,6 +52,8 @@ const Home = () => {
 	const userSurname = useSelector(selectUserSurname);
 	const allPosts = useSelector(SelectAllPosts);
 	const userFriendsId = useSelector(selectUserFriends);
+
+	const userFriends = useSelector(selectUserFriends);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -51,7 +65,66 @@ const Home = () => {
 			);
 			dispatch(setPosts(userFriendsPosts));
 		});
+	}, [userFriends]);
+
+	useEffect(() => {
+		const getUserFriends = async () => {
+			const docRef = doc(db, 'users', userId);
+			const userData = await getDoc(docRef);
+			dispatch(setUserFriends(userData.data().friends));
+		};
+		getUserFriends();
 	}, []);
+
+	useEffect(() => {
+		const q = query(collection(db, 'users'));
+
+		const friends = [];
+		let noFriends = [];
+		onSnapshot(q, (querySnapshot) => {
+			let users = querySnapshot.docs
+				.filter((snap) => snap.id !== userId)
+				.map((item) => {
+					if (userFriends.length > 0) {
+						if (userFriends.includes(item.id)) {
+							friends.push({
+								id: item.id,
+								data: {
+									...item.data(),
+									birthday: JSON.stringify(
+										new Date(item.data().birthday.seconds)
+									),
+								},
+							});
+						} else {
+							noFriends.push({
+								id: item.id,
+								data: {
+									...item.data(),
+									birthday: JSON.stringify(
+										new Date(item.data().birthday.seconds)
+									),
+								},
+							});
+						}
+					} else {
+						noFriends.push({
+							id: item.id,
+							data: {
+								...item.data(),
+								birthday: JSON.stringify(
+									new Date(item.data().birthday.seconds)
+								),
+							},
+						});
+					}
+				})
+				.filter((item) => item);
+
+			dispatch(setShowFriends(friends));
+			dispatch(setNoFriends(noFriends));
+		});
+	}, [userFriends]);
 
 	return (
 		<Container>

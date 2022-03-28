@@ -18,30 +18,20 @@ const friendsSlice = createSlice({
 		setUserFriends: (state, action) => {
 			state.userFriends = action.payload;
 		},
+		addUserFriends: (state, action) => {
+			//state.userFriends = [...state.userFriends, action.payload.id];
+			state.userFriends = [...action.payload.friends, action.payload.id];
+		},
+		deleteUserFriends: (state, action) => {
+			state.userFriends = state.userFriends.filter(
+				(item) => item !== action.payload
+			);
+		},
 		setNoFriends: (state, action) => {
 			state.noFriends = action.payload;
 		},
 		setShowFriends: (state, action) => {
 			state.showFriends = action.payload;
-		},
-		setUpdate: (state, action) => {
-			state.update = action.payload;
-		},
-		setFinishUpdate: (state) => {
-			state.update(false);
-		},
-		setNewFriend: (state, action) => {
-			const { id, data, noFriends, userFriends } = action.payload;
-			let newNoFriends = noFriends.filter((item) => item.id !== id);
-			let newUserFriends = [...userFriends, { id, data }];
-			setNoFriends(newNoFriends);
-			setShowFriends(newUserFriends);
-		},
-		deleteFriend: (state, action) => {
-			state.userFriends = state.userFriends.filter(
-				(item) => item.id !== action.payload.id
-			);
-			state.noFriends.push(action.payload.data);
 		},
 	},
 });
@@ -51,10 +41,8 @@ export const {
 	setUserFriends,
 	setNoFriends,
 	setShowFriends,
-	setUpdate,
-	setFinishUpdate,
-	setNewFriend,
-	deleteFriend,
+	addUserFriends,
+	deleteUserFriends,
 } = friendsSlice.actions;
 
 export const selectAllUsers = (state) => state.friends.allUsers;

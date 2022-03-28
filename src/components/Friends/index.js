@@ -14,24 +14,20 @@ import {
 import db from '../../firebase';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-	selectAllUsers,
 	selectShowFriends,
 	selectUserFriends,
 	selectUserNoFriends,
-	setAllUsers,
 	setNoFriends,
 	setShowFriends,
 	setUserFriends,
 } from '../../features/friends/friendsSlice';
 import { selectUserId } from '../../features/auth/authSlice';
 import FriendCard from '../FriendCard';
-//no friends
-//https://www.facebook.com/images/comet/empty_states_icons/people/null_states_people_gray_wash.svg
+
 const Friends = () => {
 	const [showingFriends, setShowingFriends] = useState(false);
-
+	const [update, setUpdate] = useState(false);
 	const userId = useSelector(selectUserId);
-	const allUsers = useSelector(selectAllUsers);
 	const noFriends = useSelector(selectUserNoFriends);
 	const userFriends = useSelector(selectUserFriends);
 	const showFriends = useSelector(selectShowFriends);
@@ -55,46 +51,6 @@ const Friends = () => {
 			let users = querySnapshot.docs
 				.filter((snap) => snap.id !== userId)
 				.map((item) => {
-					/* 					for (const i of userFriends) {
-						if (item.id !== i) {
-							noFriends.push({
-								id: item.id,
-								data: {
-									...item.data(),
-									birthday: JSON.stringify(
-										new Date(item.data().birthday.seconds)
-									),
-								},
-							});
-						} else
-							friends.push({
-								id: item.id,
-								data: {
-									...item.data(),
-									birthday: JSON.stringify(
-										new Date(item.data().birthday.seconds)
-									),
-								},
-							});
-					}
-					if (userFriends.length < 1)
-						noFriends.push({
-							id: item.id,
-							data: {
-								...item.data(),
-								birthday: JSON.stringify(
-									new Date(item.data().birthday.seconds)
-								),
-							},
-						});
-					//if (userFriends.length >= users.length) noFriends = [];
-					return {
-						id: item.id,
-						data: {
-							...item.data(),
-							birthday: JSON.stringify(new Date(item.data().birthday.seconds)),
-						},
-					}; */
 					if (userFriends.length > 0) {
 						if (userFriends.includes(item.id)) {
 							friends.push({
@@ -131,11 +87,10 @@ const Friends = () => {
 				})
 				.filter((item) => item);
 
-			//dispatch(setAllUsers(users));
 			dispatch(setShowFriends(friends));
 			dispatch(setNoFriends(noFriends));
 		});
-	}, []);
+	}, [userFriends]);
 
 	return (
 		<Container>
@@ -165,6 +120,8 @@ const Friends = () => {
 								name={`${user.data.name} ${user.data.surname}`}
 								image={user.data.image}
 								btnText="Add"
+								setUpdate={setUpdate}
+								update={update}
 							/>
 						))}
 					{showFriends.length > 0 &&
@@ -176,6 +133,8 @@ const Friends = () => {
 								name={`${user.data.name} ${user.data.surname}`}
 								image={user.data.image}
 								btnText="Delete"
+								setUpdate={setUpdate}
+								update={update}
 							/>
 						))}
 					{showFriends.length === 0 && showingFriends && (
